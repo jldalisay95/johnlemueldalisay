@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">John Lemuel Dalisay portfolio mark</title>
+  <desc id="desc">A teal and blue monogram with a public health data cross.</desc>
+  <rect width="64" height="64" rx="14" fill="#0f766e"/>
+  <path d="M18 19h9v26c0 7-4 10-10 10-3 0-5-.6-7-1.7l2.3-7.1c1.1.6 2.1.9 3.4.9 1.6 0 2.3-1 2.3-3.2V19Z" fill="#ffffff"/>
+  <path d="M31 19h10c8.7 0 14 5.1 14 13s-5.3 13-14 13H31V19Zm9 18.2h1.3c3.3 0 5-2 5-5.2s-1.7-5.2-5-5.2H40v10.4Z" fill="#dff7ee"/>
+  <path d="M29 50h18M38 41v18" stroke="#93f3cc" stroke-width="5" stroke-linecap="round"/>
+</svg>

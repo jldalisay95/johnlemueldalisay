@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 520" role="img" aria-labelledby="title desc">
+  <title id="title">Public health data flow diagram</title>
+  <desc id="desc">A dashboard-inspired diagram connecting health systems, analytics, referrals, and public health decisions.</desc>
+  <defs>
+    <linearGradient id="card" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#edf9f6"/>
+    </linearGradient>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="18" stdDeviation="24" flood-color="#0f172a" flood-opacity=".14"/>
+    </filter>
+  </defs>
+  <rect width="760" height="520" rx="34" fill="#f8fafc"/>
+  <path d="M72 394 C190 315 275 437 376 340 S553 240 672 306" fill="none" stroke="#c7ecdf" stroke-width="24" stroke-linecap="round"/>
+  <path d="M95 145 C204 98 288 178 380 142 S557 91 661 154" fill="none" stroke="#dbeafe" stroke-width="22" stroke-linecap="round"/>
+  <g filter="url(#shadow)">
+    <rect x="58" y="66" width="226" height="150" rx="22" fill="url(#card)" stroke="#d7ece8"/>
+    <rect x="300" y="44" width="176" height="120" rx="20" fill="#ffffff" stroke="#d7e3f7"/>
+    <rect x="492" y="86" width="210" height="150" rx="22" fill="#ffffff" stroke="#d7ece8"/>
+    <rect x="96" y="294" width="204" height="154" rx="22" fill="#ffffff" stroke="#d7e3f7"/>
+    <rect x="356" y="254" width="272" height="166" rx="24" fill="url(#card)" stroke="#d7ece8"/>
+  </g>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M284 138h38" stroke="#0f766e" stroke-width="5"/>
+    <path d="M476 113h37" stroke="#1d4ed8" stroke-width="5"/>
+    <path d="M300 359h58" stroke="#15803d" stroke-width="5"/>
+    <path d="M389 253v-83" stroke="#0f766e" stroke-width="5" stroke-dasharray="9 13"/>
+  </g>
+  <g font-family="Inter, Arial, sans-serif" fill="#102033">
+    <text x="84" y="106" font-size="17" font-weight="700">Health Systems</text>
+    <text x="84" y="134" font-size="13" fill="#475569">service data, records, reports</text>
+    <rect x="84" y="158" width="152" height="10" rx="5" fill="#dff7ee"/>
+    <rect x="84" y="178" width="104" height="10" rx="5" fill="#bfdbfe"/>
+    <rect x="84" y="198" width="132" height="10" rx="5" fill="#bbf7d0"/>
+
+    <text x="326" y="86" font-size="17" font-weight="700">FHIR</text>
+    <text x="326" y="114" font-size="13" fill="#475569">interoperability</text>
+    <circle cx="414" cy="96" r="18" fill="#dff7ee"/>
+    <path d="M414 86v20M404 96h20" stroke="#0f766e" stroke-width="4" stroke-linecap="round"/>
+
+    <text x="520" y="128" font-size="17" font-weight="700">Referrals</text>
+    <text x="520" y="156" font-size="13" fill="#475569">workflow-aligned exchange</text>
+    <rect x="520" y="180" width="116" height="11" rx="5.5" fill="#bfdbfe"/>
+    <rect x="520" y="202" width="82" height="11" rx="5.5" fill="#dff7ee"/>
+
+    <text x="124" y="336" font-size="17" font-weight="700">M&amp;E</text>
+    <text x="124" y="364" font-size="13" fill="#475569">learning and evidence use</text>
+    <path d="M128 407h122" stroke="#e2e8f0" stroke-width="4"/>
+    <path d="M128 407l32-28 31 17 42-42" stroke="#1d4ed8" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <text x="392" y="302" font-size="17" font-weight="700">Analytics</text>
+    <text x="392" y="330" font-size="13" fill="#475569">dashboards, automation, decisions</text>
+    <rect x="394" y="356" width="26" height="34" rx="7" fill="#bfdbfe"/>
+    <rect x="435" y="336" width="26" height="54" rx="7" fill="#dff7ee"/>
+    <rect x="476" y="368" width="26" height="22" rx="7" fill="#bbf7d0"/>
+    <rect x="517" y="320" width="26" height="70" rx="7" fill="#93c5fd"/>
+  </g>
+</svg>
