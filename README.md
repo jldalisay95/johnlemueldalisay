@@ -175,7 +175,7 @@ The analytics code:
 
 - Loads only when `VITE_GA_MEASUREMENT_ID` is present and matches the GA4 measurement ID format.
 - Does nothing safely when the measurement ID is missing.
-- Tracks the initial page view.
+- Tracks the initial page view with `gtag("config", ...)` after the tag is initialized.
 - Tracks section navigation as `section_view`.
 - Tracks resume downloads as `resume_download`.
 - Tracks dashboard links as `dashboard_click`.
@@ -240,11 +240,50 @@ npm run build
 ```
 
 8. Deploy through GitHub Actions.
-9. Verify in Google Analytics:
+9. Verify the deployed installation:
+
+### Verify with page source and DevTools
+
+1. Open `https://jldalisay95.github.io/johnlemueldalisay/`.
+2. Open **View Page Source** and confirm the app loads a JavaScript file from `/johnlemueldalisay/assets/`.
+3. Open browser **DevTools -> Network**.
+4. Reload the page.
+5. Search the Network panel for:
+
+```txt
+gtag/js?id=G-T3Z0B6JBXK
+```
+
+6. Also search for GA4 collection requests containing:
+
+```txt
+g/collect
+G-T3Z0B6JBXK
+```
+
+The GA Measurement ID is bundled into the built JavaScript file because Vite replaces `VITE_GA_MEASUREMENT_ID` at build time. It will not appear as a separate inline script in `index.html`.
+
+### Verify with Google Tag Assistant
+
+1. Open `https://tagassistant.google.com/`.
+2. Add this site URL:
+
+```txt
+https://jldalisay95.github.io/johnlemueldalisay/
+```
+
+3. Connect Tag Assistant to the site.
+4. Confirm that Google tag `G-T3Z0B6JBXK` is detected.
+5. Click portfolio links such as **Download Resume**, dashboard links, and profile links.
+6. Confirm events appear for page views and tracked link interactions.
+
+### Verify with Google Analytics Realtime
 
 - Open **Reports -> Realtime**.
 - Open the GitHub Pages site in another browser or incognito window.
-- Confirm that a visit appears.
+- Disable ad blockers for the test browser if Realtime does not update.
+- Click through the portfolio for 30-60 seconds.
+- Confirm that a visit appears. GA4 setup checks and standard reports can lag behind Realtime.
 
 ## GitHub Pages Deployment
 

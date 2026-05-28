@@ -14,6 +14,8 @@ declare global {
 const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID;
 const GA_SCRIPT_ID = "ga4-gtag-script";
 const VALID_MEASUREMENT_ID_PATTERN = /^G-[A-Z0-9]+$/;
+let isInitialized = false;
+let lastTrackedPagePath: string | undefined;
 
 function hasValidMeasurementId() {
   return Boolean(GA_MEASUREMENT_ID && VALID_MEASUREMENT_ID_PATTERN.test(GA_MEASUREMENT_ID));
@@ -56,14 +58,12 @@ export function initGA() {
     document.head.appendChild(script);
   }
 
+  if (isInitialized) {
+    return;
+  }
+
   window.gtag?.("js", new Date());
-  window.gtag?.("config", GA_MEASUREMENT_ID, {
-    allow_ad_personalization_signals: false,
-    allow_google_signals: false,
-    anonymize_ip: true,
-    page_path: `${window.location.pathname}${window.location.search}${window.location.hash}`,
-    send_page_view: false,
-  });
+  isInitialized = true;
 }
 
 export function trackPageView(path?: string) {
@@ -74,7 +74,15 @@ export function trackPageView(path?: string) {
   ensureGtag();
   const pagePath = path ?? `${window.location.pathname}${window.location.search}${window.location.hash}`;
 
-  window.gtag?.("event", "page_view", {
+  if (pagePath === lastTrackedPagePath) {
+    return;
+  }
+
+  lastTrackedPagePath = pagePath;
+  window.gtag?.("config", GA_MEASUREMENT_ID, {
+    allow_ad_personalization_signals: false,
+    allow_google_signals: false,
+    anonymize_ip: true,
     page_path: pagePath,
     page_location: window.location.href,
     page_title: document.title,
