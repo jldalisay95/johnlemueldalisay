@@ -37,6 +37,45 @@
     <link rel="canonical" href="https://jldalisay95.github.io/johnlemueldalisay/" />
     <link rel="icon" type="image/svg+xml" href="%BASE_URL%favicon.svg" />
     <title>John Lemuel Dalisay | Digital Health, Public Health Data, and Health Information Systems</title>
+    <script>
+      (function () {
+        var measurementId = "%VITE_GA_MEASUREMENT_ID%";
+        var isValidMeasurementId = /^G-[A-Z0-9]+$/.test(measurementId);
+
+        if (!isValidMeasurementId) {
+          return;
+        }
+
+        window.dataLayer = window.dataLayer || [];
+        window.gtag =
+          window.gtag ||
+          function gtag() {
+            window.dataLayer.push(arguments);
+          };
+
+        if (!document.getElementById("ga4-gtag-script")) {
+          var script = document.createElement("script");
+          script.id = "ga4-gtag-script";
+          script.async = true;
+          script.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(measurementId);
+          document.head.appendChild(script);
+        }
+
+        var pagePath = window.location.pathname + window.location.search + window.location.hash;
+        window.gtag("js", new Date());
+        window.gtag("config", measurementId, {
+          allow_ad_personalization_signals: false,
+          allow_google_signals: false,
+          anonymize_ip: true,
+          page_path: pagePath,
+          page_location: window.location.href,
+          page_title: document.title,
+        });
+
+        window.__portfolioGaInitialized = true;
+        window.__portfolioGaInitialPagePath = pagePath;
+      })();
+    </script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",

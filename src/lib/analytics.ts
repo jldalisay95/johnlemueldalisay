@@ -6,6 +6,8 @@ type GtagFunction = (command: GtagCommand, target: string | Date, params?: Analy
 
 declare global {
   interface Window {
+    __portfolioGaInitialized?: boolean;
+    __portfolioGaInitialPagePath?: string;
     dataLayer?: unknown[];
     gtag?: GtagFunction;
   }
@@ -49,6 +51,12 @@ export function initGA() {
   }
 
   ensureGtag();
+
+  if (window.__portfolioGaInitialized) {
+    isInitialized = true;
+    lastTrackedPagePath = window.__portfolioGaInitialPagePath;
+    return;
+  }
 
   if (!document.getElementById(GA_SCRIPT_ID)) {
     const script = document.createElement("script");

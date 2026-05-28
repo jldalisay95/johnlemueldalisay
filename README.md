@@ -245,23 +245,29 @@ npm run build
 ### Verify with page source and DevTools
 
 1. Open `https://jldalisay95.github.io/johnlemueldalisay/`.
-2. Open **View Page Source** and confirm the app loads a JavaScript file from `/johnlemueldalisay/assets/`.
-3. Open browser **DevTools -> Network**.
-4. Reload the page.
-5. Search the Network panel for:
+2. Open **View Page Source** and confirm the source contains:
 
 ```txt
 gtag/js?id=G-T3Z0B6JBXK
 ```
 
-6. Also search for GA4 collection requests containing:
+3. Confirm the app also loads a JavaScript file from `/johnlemueldalisay/assets/`.
+4. Open browser **DevTools -> Network**.
+5. Reload the page.
+6. Search the Network panel for:
+
+```txt
+gtag/js?id=G-T3Z0B6JBXK
+```
+
+7. Also search for GA4 collection requests containing:
 
 ```txt
 g/collect
 G-T3Z0B6JBXK
 ```
 
-The GA Measurement ID is bundled into the built JavaScript file because Vite replaces `VITE_GA_MEASUREMENT_ID` at build time. It will not appear as a separate inline script in `index.html`.
+The Google tag bootstrap is included in `index.html` so Google Tag Assistant can detect it early. The Measurement ID is still supplied by `VITE_GA_MEASUREMENT_ID` at build time. If the variable is missing, the bootstrap validates the value and exits without loading GA.
 
 ### Verify with Google Tag Assistant
 
@@ -276,6 +282,14 @@ https://jldalisay95.github.io/johnlemueldalisay/
 4. Confirm that Google tag `G-T3Z0B6JBXK` is detected.
 5. Click portfolio links such as **Download Resume**, dashboard links, and profile links.
 6. Confirm events appear for page views and tracked link interactions.
+
+If Tag Assistant times out:
+
+- Click **Retry** once after the page has fully loaded.
+- Disable ad blockers or privacy extensions for the test.
+- Confirm the Tag Assistant extension can read and change site data for `jldalisay95.github.io`.
+- Try entering the exact project-site URL with the trailing slash: `https://jldalisay95.github.io/johnlemueldalisay/`.
+- If Tag Assistant adds a debug parameter that changes page behavior, edit the Tag Assistant connection and turn off the debug signal in the URL.
 
 ### Verify with Google Analytics Realtime
 
