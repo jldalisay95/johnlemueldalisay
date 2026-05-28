@@ -125,8 +125,8 @@ export const portfolio = {
     googleScholarUrl: "https://scholar.google.com/citations?hl=en&user=Tats9cUAAAAJ",
     githubUrl: "https://github.com/jldalisay95",
     resumeUrl: `${import.meta.env.BASE_URL}John_Lemuel_Dalisay_Resume.pdf`,
-    siteUrl: "https://johnlemueldalisay.github.io/",
-    canonicalUrl: "https://johnlemueldalisay.github.io/",
+    siteUrl: "https://jldalisay95.github.io/johnlemueldalisay/",
+    canonicalUrl: "https://jldalisay95.github.io/johnlemueldalisay/",
   },
   hero: {
     headline: "John Lemuel M. Dalisay",

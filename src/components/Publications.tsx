@@ -1,9 +1,10 @@
 import { ExternalLink } from "lucide-react";
 import { portfolio } from "../data/portfolio";
+import { trackContentClick } from "../lib/analytics";
 import { externalLinkProps, usableHref } from "../utils/links";
 import { SectionHeading } from "./SectionHeading";
 
-function ExternalAction({ href, label }: { href: string; label: string }) {
+function ExternalAction({ href, label, onClick }: { href: string; label: string; onClick?: (url: string) => void }) {
   const usable = usableHref(href);
   if (!usable) {
     return (
@@ -17,6 +18,7 @@ function ExternalAction({ href, label }: { href: string; label: string }) {
     <a
       href={usable}
       className="inline-flex items-center gap-1.5 rounded-full border border-health-teal/25 bg-white px-3 py-1.5 text-xs font-semibold text-health-teal transition hover:border-health-teal hover:bg-health-mint"
+      onClick={() => onClick?.(usable)}
       {...externalLinkProps(usable)}
     >
       {label}
@@ -48,7 +50,11 @@ export function Publications() {
                   <p className="mt-3 text-sm leading-6 text-slate-600">{publication.description}</p>
                   <p className="mt-4 text-sm text-slate-500">DOI: {publication.doi}</p>
                   <div className="mt-5">
-                    <ExternalAction href={publication.url} label="Open publication" />
+                    <ExternalAction
+                      href={publication.url}
+                      label="Open publication"
+                      onClick={(url) => trackContentClick(publication.title, publication.journal, url)}
+                    />
                   </div>
                 </article>
               ))}
@@ -65,7 +71,11 @@ export function Publications() {
                     <h3 className="mt-2 text-lg font-semibold leading-7 text-ink">{article.title}</h3>
                     <p className="mt-2 text-sm leading-6 text-slate-600">{article.description}</p>
                     <div className="mt-4">
-                      <ExternalAction href={article.url} label="Open article" />
+                      <ExternalAction
+                        href={article.url}
+                        label="Open article"
+                        onClick={(url) => trackContentClick(article.title, article.platform, url)}
+                      />
                     </div>
                   </article>
                 ))}
@@ -88,7 +98,11 @@ export function Publications() {
                     {presentation.date}
                   </p>
                   <div className="mt-4">
-                    <ExternalAction href={presentation.link} label="Presentation link" />
+                    <ExternalAction
+                      href={presentation.link}
+                      label="Presentation link"
+                      onClick={(url) => trackContentClick(presentation.title, presentation.event, url)}
+                    />
                   </div>
                 </article>
               ))}

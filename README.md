@@ -8,7 +8,7 @@ Positioning:
 Digital Health | Health Information Systems | Data Analytics | Monitoring & Evaluation | Interoperability
 ```
 
-This is a static GitHub Pages site built with Vite, React, TypeScript, and Tailwind CSS. It has no backend, database, authentication, analytics script, or paid dependency.
+This is a static GitHub Pages site built with Vite, React, TypeScript, and Tailwind CSS. It has no backend, database, authentication, contact form, or paid dependency. Optional Google Analytics 4 tracking loads only when a valid measurement ID is configured.
 
 ## Current Repository
 
@@ -161,6 +161,91 @@ portfolio.presentations
 
 Keep placeholders when links are missing or not approved for public sharing.
 
+## Analytics Setup
+
+This site supports Google Analytics 4 through a direct `gtag.js` implementation in `src/lib/analytics.ts`.
+
+Privacy note:
+
+```txt
+This site uses Google Analytics to understand aggregate portfolio traffic and improve content. No contact forms, accounts, or sensitive personal data are collected.
+```
+
+The analytics code:
+
+- Loads only when `VITE_GA_MEASUREMENT_ID` is present and matches the GA4 measurement ID format.
+- Does nothing safely when the measurement ID is missing.
+- Tracks the initial page view.
+- Tracks section navigation as `section_view`.
+- Tracks resume downloads as `resume_download`.
+- Tracks dashboard links as `dashboard_click`.
+- Tracks LinkedIn, GitHub, and Google Scholar links as `profile_link_click`.
+- Tracks PeReF / FHIR IG links as `project_link_click`.
+- Tracks public articles, publications, and presentations as `content_click`.
+- Tracks email link clicks as `contact_email_click` without sending the email address.
+- Does not configure advertising signals, remarketing, user ID tracking, form tracking, heatmaps, or session recordings.
+
+Setup:
+
+1. Create a Google Analytics 4 property.
+2. Create a Web data stream for the GitHub Pages URL:
+
+```txt
+https://jldalisay95.github.io/johnlemueldalisay/
+```
+
+3. Copy the Measurement ID:
+
+```txt
+G-T3Z0B6JBXK
+```
+
+4. Create a local `.env` file:
+
+```txt
+VITE_GA_MEASUREMENT_ID=G-T3Z0B6JBXK
+```
+
+5. For GitHub Pages deployment using GitHub Actions, add the Measurement ID as a repository variable:
+
+```txt
+GitHub Repository -> Settings -> Secrets and variables -> Actions -> Variables
+```
+
+Add:
+
+```txt
+VITE_GA_MEASUREMENT_ID
+```
+
+Use this value:
+
+```txt
+G-T3Z0B6JBXK
+```
+
+6. The GitHub Actions workflow exposes the variable during build:
+
+```yaml
+- name: Build
+  run: npm run build -- --base "$VITE_BASE_PATH"
+  env:
+    VITE_GA_MEASUREMENT_ID: ${{ vars.VITE_GA_MEASUREMENT_ID }}
+```
+
+7. Build locally:
+
+```bash
+npm run build
+```
+
+8. Deploy through GitHub Actions.
+9. Verify in Google Analytics:
+
+- Open **Reports -> Realtime**.
+- Open the GitHub Pages site in another browser or incognito window.
+- Confirm that a visit appears.
+
 ## GitHub Pages Deployment
 
 The deployment workflow is:
@@ -175,6 +260,12 @@ For the current repository, confirm this repository variable exists:
 
 ```txt
 VITE_BASE_PATH=/johnlemueldalisay/
+```
+
+If Google Analytics is enabled, also confirm:
+
+```txt
+VITE_GA_MEASUREMENT_ID=G-T3Z0B6JBXK
 ```
 
 In GitHub:
@@ -260,6 +351,7 @@ Before publishing:
 - Remove private phone number unless explicitly approved.
 - Do not add references.
 - Do not add invented metrics, awards, clients, roles, or outcomes.
+- Do not send email addresses, phone numbers, names, or sensitive personal data as analytics event parameters.
 
 ## QA Checklist
 
@@ -281,3 +373,5 @@ Check:
 - Layout works on mobile, tablet, and desktop.
 - Keyboard focus is visible.
 - Links have descriptive labels.
+- Site still builds and works if `VITE_GA_MEASUREMENT_ID` is missing.
+- GA4 script loads only when a valid `VITE_GA_MEASUREMENT_ID` is configured.

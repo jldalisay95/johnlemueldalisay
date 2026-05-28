@@ -1,5 +1,6 @@
 import { ExternalLink } from "lucide-react";
 import { portfolio } from "../data/portfolio";
+import { trackDashboardClick } from "../lib/analytics";
 import { SectionHeading } from "./SectionHeading";
 
 export function Dashboards() {
@@ -33,6 +34,7 @@ export function Dashboards() {
                 className="mt-5 inline-flex items-center gap-2 rounded-full bg-health-teal px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-teal-800"
                 target="_blank"
                 rel="noreferrer"
+                onClick={() => trackDashboardClick(dashboard.title, dashboard.url)}
               >
                 Open Dashboard
                 <ExternalLink aria-hidden="true" size={15} />

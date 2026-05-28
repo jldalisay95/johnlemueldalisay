@@ -1,5 +1,6 @@
 import { ExternalLink } from "lucide-react";
 import { portfolio, type ProjectItem } from "../data/portfolio";
+import { trackProjectLinkClick } from "../lib/analytics";
 import { externalLinkProps, usableHref } from "../utils/links";
 import { SectionHeading } from "./SectionHeading";
 
@@ -78,6 +79,7 @@ export function Projects() {
                             key={link.label}
                             href={href}
                             className="inline-flex items-center gap-1.5 rounded-full border border-health-teal/25 bg-white px-3 py-1.5 text-xs font-semibold text-health-teal transition hover:border-health-teal hover:bg-health-mint"
+                            onClick={() => trackProjectLinkClick(project.title, href)}
                             {...externalLinkProps(href)}
                           >
                             {link.label}

@@ -1,5 +1,6 @@
 import { ExternalLink } from "lucide-react";
 import { portfolio } from "../data/portfolio";
+import { trackEvent, trackProjectLinkClick } from "../lib/analytics";
 import { externalLinkProps, usableHref } from "../utils/links";
 import { icons } from "./icons";
 import { SectionHeading } from "./SectionHeading";
@@ -49,6 +50,14 @@ export function FeaturedWork() {
                           key={link.label}
                           href={href}
                           className="inline-flex items-center gap-1.5 rounded-full border border-health-teal/25 bg-white px-3 py-1.5 text-xs font-semibold text-health-teal transition hover:border-health-teal hover:bg-health-mint"
+                          onClick={() => {
+                            if (href.startsWith("#")) {
+                              trackEvent("section_view", { section_name: href.slice(1) });
+                              return;
+                            }
+
+                            trackProjectLinkClick(item.title, href);
+                          }}
                           {...externalLinkProps(href)}
                         >
                           {link.label}

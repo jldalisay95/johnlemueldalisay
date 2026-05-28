@@ -1,6 +1,7 @@
 import { MapPin } from "lucide-react";
 import healthDataFlow from "../assets/health-data-flow.svg";
 import { portfolio } from "../data/portfolio";
+import { trackEvent, trackProfileLinkClick, trackProjectLinkClick, trackResumeDownload } from "../lib/analytics";
 import { externalLinkProps, usableHref } from "../utils/links";
 import { icons } from "./icons";
 
@@ -21,6 +22,31 @@ function secondaryIcon(label: string) {
   if (label === "GitHub") return icons.github;
   if (label === "Google Scholar") return icons.graduation;
   return icons.network;
+}
+
+function trackHeroAction(label: string) {
+  if (label === "Download Resume") {
+    trackResumeDownload("hero");
+  }
+
+  if (label === "View My Work") {
+    trackEvent("section_view", { section_name: "featured-work" });
+  }
+
+  if (label === "Contact Me") {
+    trackEvent("section_view", { section_name: "contact" });
+  }
+}
+
+function trackHeroSecondaryLink(label: string, href: string) {
+  if (label === "LinkedIn" || label === "GitHub" || label === "Google Scholar") {
+    trackProfileLinkClick(label, href);
+    return;
+  }
+
+  if (label === "PeReF FHIR IG") {
+    trackProjectLinkClick("PeReF / Philippine eReferral FHIR Implementation Guide", href);
+  }
 }
 
 export function Hero() {
@@ -52,6 +78,7 @@ export function Hero() {
                   href={action.href}
                   className={actionClass(action.variant)}
                   download={action.label === "Download Resume" ? true : undefined}
+                  onClick={() => trackHeroAction(action.label)}
                 >
                   <Icon aria-hidden="true" size={18} />
                   {action.label}
@@ -89,6 +116,7 @@ export function Hero() {
                   key={link.label}
                   href={href}
                   className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-2 font-medium text-slate-700 transition hover:border-health-teal hover:text-health-teal"
+                  onClick={() => trackHeroSecondaryLink(link.label, href)}
                   {...externalLinkProps(href)}
                 >
                   <Icon aria-hidden="true" size={17} />

@@ -35,6 +35,8 @@ jobs:
 
       - name: Build
         run: npm run build -- --base "$VITE_BASE_PATH"
+        env:
+          VITE_GA_MEASUREMENT_ID: ${{ vars.VITE_GA_MEASUREMENT_ID }}
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5

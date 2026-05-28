@@ -1,6 +1,7 @@
 import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { portfolio } from "../data/portfolio";
+import { trackEvent } from "../lib/analytics";
 import { icons } from "./icons";
 
 const navItems = [
@@ -47,7 +48,10 @@ export function Navbar() {
           <li key={item.href}>
             <a
               href={item.href}
-              onClick={() => setIsOpen(false)}
+              onClick={() => {
+                setIsOpen(false);
+                trackEvent("section_view", { section_name: item.id });
+              }}
               className={`block rounded-full px-3 py-2 text-sm font-medium transition ${
                 isActive ? "bg-health-teal text-white" : "text-slate-600 hover:bg-slate-100 hover:text-ink"
               }`}

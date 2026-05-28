@@ -10,8 +10,15 @@ import { Publications } from "./components/Publications";
 import { Skills } from "./components/Skills";
 import { TrainingCommunity } from "./components/TrainingCommunity";
 import { WhatIDo } from "./components/WhatIDo";
+import { useEffect } from "react";
+import { initGA, trackPageView } from "./lib/analytics";
 
 export default function App() {
+  useEffect(() => {
+    initGA();
+    trackPageView();
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-700">
       <Navbar />

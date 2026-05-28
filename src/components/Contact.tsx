@@ -1,5 +1,12 @@
 import { Github, GraduationCap, Linkedin, Mail, MapPin, Network } from "lucide-react";
 import { portfolio } from "../data/portfolio";
+import {
+  trackContentClick,
+  trackContactEmailClick,
+  trackProfileLinkClick,
+  trackProjectLinkClick,
+  trackResumeDownload,
+} from "../lib/analytics";
 import { externalLinkProps, usableHref } from "../utils/links";
 import { SectionHeading } from "./SectionHeading";
 
@@ -10,6 +17,27 @@ function contactIcon(label: string) {
   if (label === "Google Scholar") return GraduationCap;
   if (label.includes("PeReF")) return Network;
   return Network;
+}
+
+function trackContactLink(label: string, href: string) {
+  if (label === "Email") {
+    trackContactEmailClick("contact_links");
+    return;
+  }
+
+  if (label === "LinkedIn" || label === "GitHub" || label === "Google Scholar") {
+    trackProfileLinkClick(label, href);
+    return;
+  }
+
+  if (label.includes("PeReF")) {
+    trackProjectLinkClick("PeReF / Philippine eReferral FHIR Implementation Guide", href);
+    return;
+  }
+
+  if (label === "Frontiers Publication") {
+    trackContentClick(label, "Frontiers", href);
+  }
 }
 
 export function Contact() {
@@ -68,18 +96,29 @@ export function Contact() {
                     </>
                   );
 
-                  if (item.href) {
-                    return (
-                      <a
-                        key={item.label}
-                        href={item.href}
-                        className="flex gap-4 rounded-lg border border-slate-200 bg-slate-50 p-4 transition hover:border-health-teal hover:bg-health-mint/50"
-                        {...externalLinkProps(item.href)}
-                      >
-                        {content}
-                      </a>
-                    );
-                  }
+                if (item.href) {
+                  const href = item.href;
+                  return (
+                    <a
+                      key={item.label}
+                      href={href}
+                      className="flex gap-4 rounded-lg border border-slate-200 bg-slate-50 p-4 transition hover:border-health-teal hover:bg-health-mint/50"
+                      onClick={() => {
+                        if (item.label === "Email") {
+                          trackContactEmailClick("contact_card");
+                          return;
+                        }
+
+                        if (item.label === "LinkedIn" || item.label === "GitHub") {
+                          trackProfileLinkClick(item.label, href);
+                        }
+                      }}
+                      {...externalLinkProps(href)}
+                    >
+                      {content}
+                    </a>
+                  );
+                }
 
                   return (
                     <div key={item.label} className="flex gap-4 rounded-lg border border-slate-200 bg-slate-50 p-4">
@@ -90,11 +129,16 @@ export function Contact() {
               </div>
 
               <div className="mt-7 flex flex-wrap gap-3">
-                <a href={emailHref} className="button-primary">
+                <a href={emailHref} className="button-primary" onClick={() => trackContactEmailClick("contact_cta")}>
                   <Mail aria-hidden="true" size={18} />
                   Send Email
                 </a>
-                <a href={portfolio.personalInfo.resumeUrl} download className="button-secondary">
+                <a
+                  href={portfolio.personalInfo.resumeUrl}
+                  download
+                  className="button-secondary"
+                  onClick={() => trackResumeDownload("contact")}
+                >
                   Download Resume
                 </a>
               </div>
@@ -125,6 +169,7 @@ export function Contact() {
                       key={link.label}
                       href={href}
                       className="inline-flex items-center gap-3 rounded-lg border border-slate-200 bg-slate-50 p-4 text-sm font-semibold text-slate-700 transition hover:border-health-teal hover:bg-health-mint/50 hover:text-health-teal"
+                      onClick={() => trackContactLink(link.label, href)}
                       {...externalLinkProps(href)}
                     >
                       <Icon aria-hidden="true" size={18} />
